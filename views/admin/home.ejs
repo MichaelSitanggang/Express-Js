@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <a href="/">Bunny Web</a>
+            <div>
+                Admin : <%= admin.username %>
+                <%- (!admin ? '<a href="/login">Login</a>' : '<a href="/logout">Logout</a>') %>
+            </div>
+        </nav>
+    </header>
+    <div>
+        <h1>List of User</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Phone Number</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% users.forEach(el => { %>
+                    <tr>
+                        <td><%= el.username %></td>
+                        <td><%= el.no_telepon %></td>
+                        <td>
+                            <button onclick="del('<%= el.id %>')">Delete</button>
+                        </td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        function del(id) {
+            axios.delete('/api/user/' + id).then(result => {
+                alert('Info status: ' + result.status);
+                location.reload();
+            }).catch(err => {
+                alert('Error: ' + err);
+            });
+        }
+    </script>
+</body>
+
+</html>

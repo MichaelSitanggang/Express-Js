@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Todo</title>
+</head>
+
+<body>
+    <h1>Edit TODO</h1>
+    <div>
+        <label for="todo">To Do:</label>
+        <input type="text" id="todo" name="todo" placeholder="To Do" value="<%=todo.todo %>">
+    </div>
+    <div>
+        <label for="deadline">Deadline:</label>
+        <input type="text" id="deadline" name="deadline" placeholder="Deadline" value="<%=todo.deadline %>">
+    </div>
+    <button onclick=<%='edit(' + todo.id + ')' %>>UPDATE</button>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        const edit = (id) => {
+            axios.put('/api/todo/' + id, {
+                todo: document.getElementById("todo").value,
+                deadline: document.getElementById("deadline").value
+            }).then((result) => {
+                alert('Info status: ' + result.status);
+                window.location = "/home";
+            }).catch((err) => {
+                alert('Error: ' + err);
+            });
+        }
+    </script>
+</body>
+
+</html>

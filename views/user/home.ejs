@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <a href="/">Bunny Web</a>
+            <div>
+                User: <%= user.username %>
+                <%- (!user ? '<a href="/login">Login</a>' : '<a href="/logout">Logout</a>') %>
+            </div>
+        </nav>
+    </header>
+    <div>
+        <h1>List of TODO</h1>
+        <a href="/create">Add New</a>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>TODO</th>
+                    <th>Deadline</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% todo.forEach(el => { %>
+                    <tr>
+                        <td><%= el.todo %></td>
+                        <td><%= el.deadline %></td>
+                        <td>
+                            <a href="/edit/<%= el.id %>">Edit</a>
+                            <button onclick="del('<%= el.id %>')">Delete</button>
+                        </td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        let del = (id) => {
+            axios.delete(`/api/todo/${id}`).then((result) => {
+                alert('Info status: ' + result.status);
+                location.reload();
+            }).catch((err) => {
+                alert('Error: ' + err);
+            });
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add TODO</title>
+</head>
+
+<body>
+    <h1>Add TODO</h1>
+    <div>
+        <label for="todo">TODO:</label>
+        <input type="text" id="todo" name="todo" placeholder="To Do">
+    </div>
+    <div>
+        <label for="deadline">Deadline:</label>
+        <input type="text" id="deadline" name="deadline" placeholder="Deadline">
+    </div>
+    <button id="save">SAVE</button>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        document.getElementById('save').onclick = () => {
+            axios.post('/api/todo', {
+                todo: document.getElementById("todo").value,
+                deadline: document.getElementById("deadline").value
+            }).then((result) => {
+                alert('Info status: ' + result.status);
+                window.location = "/home";
+            }).catch((err) => {
+                alert('Error: ' + err);
+            });
+        }
+    </script>
+</body>
+
+</html>
